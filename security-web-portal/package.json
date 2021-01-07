@@ -30,9 +30,11 @@
   },
   "dependencies": {
     "@americanexpress/one-app-router": "^1.0.0",
+    "content-security-policy-builder": "^2.1.0",
+    "fetchye": "^1.0.1",
+    "fetchye-one-app": "^1.0.1",
     "holocron": "^1.1.0",
-    "react": "^16.13.1",
-    "content-security-policy-builder": "^2.1.0"
+    "react": "^16.13.1"
   },
   "devDependencies": {
     "@americanexpress/one-app-bundler": "^6.0.0",
