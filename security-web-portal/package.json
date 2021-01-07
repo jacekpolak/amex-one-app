@@ -24,6 +24,7 @@
         ".",
         "../navigation"
       ],
+      "parrotMiddleware": "./dev.middleware.js",
       "rootModuleName": "security-web-portal"
     }
   },
@@ -44,7 +45,8 @@
     "eslint": "^7.9.0",
     "eslint-config-amex": "^13.1.0",
     "jest": "^26.4.2",
-    "rimraf": "^3.0.0"
+    "rimraf": "^3.0.0",
+    "parrot-middleware": "^4.1.1"
   },
   "jest": {
     "preset": "amex-jest-preset-react"
