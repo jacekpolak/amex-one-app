@@ -44,7 +44,15 @@ if (!global.BROWSER) {
   SecurityWebPortal.appConfig = require('../appConfig').default;
 }
 
-export const loadModuleData = async ({ store: { dispatch } }) => {
+export const loadModuleData = async ({ store: { dispatch }, fetchClient }) => {
+  // Using dispatch (Redux) for getting data
+  // Currently this is 2nd call to API besides Fetchye
+  await dispatch({ type: 'LOADING_API' });
+  const response = await fetchClient(SHIPS_API);
+  const data = await response.json();
+  await dispatch({ type: 'LOADED_API', data });
+
+  // Connect child module to root component
   await dispatch(composeModules([{ name: 'navigation' }]));
 };
 
