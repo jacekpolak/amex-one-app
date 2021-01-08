@@ -1,14 +1,13 @@
-import React from 'react';
-import { RenderModule, composeModules } from 'holocron';
-import { useFetchye } from 'fetchye';
-import childRoutes from '../childRoutes';
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { RenderModule, composeModules } from "holocron";
+import childRoutes from "../childRoutes";
+import reducer from "../duck";
 
-const SHIPS_API = 'http://localhost:3002/ship_log';
+const SHIPS_API = "http://localhost:3002/ship_log";
 
-const SecurityWebPortal = () => {
-  const { isLoading, data, error } = useFetchye(SHIPS_API);
-  const ships = data && data.body;
-
+const SecurityWebPortal = ({ isLoading, isComplete, data, error }) => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -20,14 +19,16 @@ const SecurityWebPortal = () => {
   return (
     <div>
       <h1>Welcome to One App!</h1>
-      {ships &&
-        ships.map((shipItem, index) => (
+      <RenderModule moduleName="navigation" />
+      {!isLoading &&
+        isComplete &&
+        data &&
+        data.map((shipItem, index) => (
           <div key={`ship-${index}`}>
             <p>Name - {shipItem.name}</p>
             <p>Captain - {shipItem.captain}</p>
           </div>
         ))}
-      <RenderModule moduleName="navigation" />
     </div>
   );
 };
@@ -41,24 +42,37 @@ SecurityWebPortal.childRoutes = childRoutes;
 /* istanbul ignore next */
 if (!global.BROWSER) {
   // eslint-disable-next-line global-require
-  SecurityWebPortal.appConfig = require('../appConfig').default;
+  SecurityWebPortal.appConfig = require("../appConfig").default;
 }
 
 export const loadModuleData = async ({ store: { dispatch }, fetchClient }) => {
-  // Using dispatch (Redux) for getting data
-  // Currently this is 2nd call to API besides Fetchye
-  await dispatch({ type: 'LOADING_API' });
+  await dispatch({ type: "LOADING_API" });
   const response = await fetchClient(SHIPS_API);
   const data = await response.json();
-  await dispatch({ type: 'LOADED_API', data });
+  await dispatch({ type: "LOADED_API", data });
 
   // Connect child module to root component
-  await dispatch(composeModules([{ name: 'navigation' }]));
+  await dispatch(composeModules([{ name: "navigation" }]));
+};
+
+SecurityWebPortal.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  isComplete: PropTypes.bool.isRequired,
+  data: PropTypes.shape([]).isRequired,
+  error: PropTypes.string.isRequired,
 };
 
 SecurityWebPortal.holocron = {
-  name: 'SecurityWebPortal',
+  name: "SecurityWebPortal",
   loadModuleData,
+  reducer,
 };
 
-export default SecurityWebPortal;
+export const mapStateToProps = (state) => ({
+  isComplete: state.getIn(["modules", "security-web-portal", "isComplete"]),
+  isLoading: state.getIn(["modules", "security-web-portal", "isLoading"]),
+  data: state.getIn(["modules", "security-web-portal", "data"]),
+  error: state.getIn(["modules", "security-web-portal", "error"]),
+});
+
+export default connect(mapStateToProps)(SecurityWebPortal);

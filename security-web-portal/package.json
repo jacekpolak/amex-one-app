@@ -34,7 +34,10 @@
     "fetchye": "^1.0.1",
     "fetchye-one-app": "^1.0.1",
     "holocron": "^1.1.0",
+    "immutable": "^4.0.0-rc.12",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
+    "react-redux": "^7.2.2",
     "redux-immutable": "^4.0.0"
   },
   "devDependencies": {
@@ -48,8 +51,8 @@
     "eslint": "^7.9.0",
     "eslint-config-amex": "^13.1.0",
     "jest": "^26.4.2",
-    "rimraf": "^3.0.0",
-    "parrot-middleware": "^4.1.1"
+    "parrot-middleware": "^4.1.1",
+    "rimraf": "^3.0.0"
   },
   "jest": {
     "preset": "amex-jest-preset-react"
