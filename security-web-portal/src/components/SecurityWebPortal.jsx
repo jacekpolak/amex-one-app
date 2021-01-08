@@ -23,8 +23,9 @@ const SecurityWebPortal = ({ isLoading, isComplete, data, error }) => {
       {!isLoading &&
         isComplete &&
         data &&
-        data.map((shipItem, index) => (
-          <div key={`ship-${index}`}>
+        data.map((shipItem) => (
+          <div key={shipItem.id}>
+            <p>ID - {shipItem.id}</p>
             <p>Name - {shipItem.name}</p>
             <p>Captain - {shipItem.captain}</p>
           </div>

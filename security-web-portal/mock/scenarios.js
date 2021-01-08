@@ -2,43 +2,43 @@
 // Configuring scenarios: https://github.com/americanexpress/parrot/blob/master/SCENARIOS.md
 
 module.exports = {
-  'has one ship': [
+  "has one ship": [
     {
-      request: '/ship_log',
+      request: "/ship_log",
       response: {
-        body: [{ name: 'The Jolly Roger', captain: 'Captain Hook' }],
+        body: [{ id: 0, name: "The Jolly Roger", captain: "Captain Hook" }],
       },
     },
   ],
-  'has more ships': [
+  "has more ships": [
     {
-      request: '/ship_log',
+      request: "/ship_log",
       response: {
         body: [
-          { name: 'The Jolly Roger', captain: 'Captain Hook' },
-          { name: 'The Black Pearl', captain: 'Jack Sparrow' },
-          { name: 'Flying Dutchman', captain: 'Davy Jones' },
-          { name: 'The Wanderer', captain: 'Captain Ron' },
+          { id: 0, name: "The Jolly Roger", captain: "Captain Hook" },
+          { id: 1, name: "The Black Pearl", captain: "Jack Sparrow" },
+          { id: 2, name: "Flying Dutchman", captain: "Davy Jones" },
+          { id: 3, name: "The Wanderer", captain: "Captain Ron" },
         ],
       },
     },
   ],
-  'has more ships with any mime type': [
+  "has more ships with any mime type": [
     {
-      request: '/ship_log',
+      request: "/ship_log",
       response: {
-        contentType: 'text/plain',
+        contentType: "text/plain",
         body: [
-          '# Ship Log',
+          "# Ship Log",
           "* name: 'The Jolly Roger', captain: 'Captain Hook'",
           "* name: 'The Black Pearl', captain: 'Jack Sparrow'",
-        ].join('\n'),
+        ].join("\n"),
       },
     },
   ],
-  'has a server error': [
+  "has a server error": [
     {
-      request: '/ship_log',
+      request: "/ship_log",
       response: {
         status: 500,
       },
